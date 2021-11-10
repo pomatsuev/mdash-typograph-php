@@ -37,3 +37,4 @@ Public Domain
 
 ### Roadmap
 * Добавить тесты
+* fixed deprecated warning
