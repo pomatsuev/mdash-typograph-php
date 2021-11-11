@@ -203,7 +203,7 @@ class Lib
         	$text = preg_replace_callback(
         	    '/(\<\/?)([^<>]+?)(\>)/s',
                 function ($m) {
-                    return (strlen($m[1])==1 && substr(trim($m[2]), 0, 1) == '-' && substr(trim($m[2]), 1, 1) != '-')? $m[0] : $m[1].( substr(trim($m[2]), 0, 1) === "a" ? "%%___"  : ""  ) . Emuravjev\Mdash\Lib::encrypt_tag(trim($m[2]))  . $m[3];
+                    return (strlen($m[1])==1 && substr(trim($m[2]), 0, 1) == '-' && substr(trim($m[2]), 1, 1) != '-')? $m[0] : $m[1].( substr(trim($m[2]), 0, 1) === "a" ? "%%___"  : ""  ) . Lib::encrypt_tag(trim($m[2]))  . $m[3];
                 },
                 $text
             );
@@ -211,7 +211,7 @@ class Lib
         	$text = preg_replace_callback(
         	    '/(\<\/?)([^<>]+?)(\>)/s',
                 function ($m) {
-                    return (strlen($m[1])==1 && substr(trim($m[2]), 0, 1) == '-' && substr(trim($m[2]), 1, 1) != '-')? $m[0] : $m[1].( substr(trim($m[2]), 0, 3) === "%%___" ? Emuravjev\Mdash\Lib::decrypt_tag(substr(trim($m[2]), 4)) : Emuravjev\Mdash\Lib::decrypt_tag(trim($m[2])) ) . $m[3];
+                    return (strlen($m[1])==1 && substr(trim($m[2]), 0, 1) == '-' && substr(trim($m[2]), 1, 1) != '-')? $m[0] : $m[1].( substr(trim($m[2]), 0, 3) === "%%___" ? Lib::decrypt_tag(substr(trim($m[2]), 4)) : Lib::decrypt_tag(trim($m[2])) ) . $m[3];
                 },
                 $text
             );
@@ -230,7 +230,7 @@ class Lib
     	$text = preg_replace_callback(
     	    '/'.Lib::INTERNAL_BLOCK_OPEN.'([a-zA-Z0-9\/=]+?)'.Lib::INTERNAL_BLOCK_CLOSE.'/s',
             function ($m) {
-                return Emuravjev\Mdash\Lib::decrypt_tag($m[1]);
+                return Lib::decrypt_tag($m[1]);
             },
             $text
         );
@@ -670,17 +670,17 @@ class Lib
 	{
 		$text = preg_replace_callback("/\&#([0-9]+)\;/",
 				function ($m) {
-                    return Emuravjev\Mdash\Lib::_getUnicodeChar(intval($m[1]));
+                    return Lib::_getUnicodeChar(intval($m[1]));
                 }
 				, $text);
 		$text = preg_replace_callback("/\&#x([0-9A-F]+)\;/",
 				function ($m) {
-                    return Emuravjev\Mdash\Lib::_getUnicodeChar(hexdec($m[1]));
+                    return Lib::_getUnicodeChar(hexdec($m[1]));
                 }
 				, $text);
 		$text = preg_replace_callback("/\&([a-zA-Z0-9]+)\;/",
 				function ($m) {
-                    $r = Emuravjev\Mdash\Lib::html_char_entity_to_unicode($m[1]);
+                    $r = Lib::html_char_entity_to_unicode($m[1]);
                     return $r ? $r : $m[0];
                 }
 				, $text);
